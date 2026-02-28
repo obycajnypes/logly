@@ -1,4 +1,4 @@
-# logly
+# logly ano
 
 Offline desktop aplikácia pre tvorbu tréningových templateov, logovanie sérií a sledovanie progresu.
 
