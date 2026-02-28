@@ -1,0 +1,28 @@
+{
+  "name": "logly",
+  "version": "0.1.0",
+  "description": "Offline desktop app for workout templates and progress tracking",
+  "main": "src/main.js",
+  "scripts": {
+    "postinstall": "electron-rebuild -f -w better-sqlite3",
+    "rebuild:native": "electron-rebuild -f -w better-sqlite3",
+    "start": "electron .",
+    "dev": "npm run rebuild:native && LOGLY_DEV_HOT=1 electron .",
+    "dev:stable": "npm run rebuild:native && electron ."
+  },
+  "keywords": [
+    "electron",
+    "sqlite",
+    "workout",
+    "tracking"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.9.0"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^3.7.1",
+    "electron": "^36.0.0"
+  }
+}

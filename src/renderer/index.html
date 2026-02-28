@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>logly</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-frame">
+      <div class="app-shell">
+        <aside class="sidebar">
+          <div class="brand">
+            <img src="./loglylogo.png" alt="Logly logo" class="brand-logo-image" />
+          </div>
+
+          <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="dashboard">
+              <span class="tab-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                  <path d="M6 3.8h9.5a2 2 0 0 1 2 2V20a.2.2 0 0 1-.3.2l-2.9-1.7a1 1 0 0 0-1 0l-2.3 1.3a1 1 0 0 1-1 0l-2.3-1.3a1 1 0 0 0-1 0l-2.9 1.7A.2.2 0 0 1 3 20V5.8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2" />
+                  <path d="M7 8h6.8M7 12h6.8M7 16h4.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              <span>Log</span>
+            </button>
+            <button class="tab-btn" data-tab="calories">
+              <span class="tab-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                  <path
+                    d="M11.8 2.5c.6 2.3-.2 3.8-1.3 5.2-.9 1.2-1.9 2.3-2 4.1-.1 2.8 2 5.1 4.8 5.1 3.1 0 5.1-2.4 5.1-5.4 0-3.6-2.3-6.4-6.6-9Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M9.4 14.5c0 1.9 1.4 3 3 3 1.7 0 2.9-1.3 2.9-3.2 0-1.4-.9-2.6-2.4-3.6-.2 1.1-.8 1.8-1.5 2.4-.8.7-1.4 1.4-1.4 2.4Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+              <span>Calories</span>
+            </button>
+            <button class="tab-btn" data-tab="templates">
+              <span class="tab-icon">▭</span>
+              <span>Templates</span>
+            </button>
+            <button class="tab-btn" data-tab="exercises">
+              <span class="tab-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                  <path
+                    d="M3 9v6m3-8v10m12-8v6m3-8v10M7 10h10m-10 4h10"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+              <span>Exercises</span>
+            </button>
+            <button class="tab-btn" data-tab="progress">
+              <span class="tab-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                  <path d="M4 19.5V10M10 19.5V6.5M16 19.5v-9M22 19.5V4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              <span>Analytics</span>
+            </button>
+            <button class="tab-btn" data-tab="settings">
+              <span class="tab-icon">⚙</span>
+              <span>Settings</span>
+            </button>
+          </nav>
+
+        </aside>
+
+        <main class="content">
+          <section class="tab-panel active" id="tab-dashboard">
+            <div class="log-head">
+              <div>
+                <h2>Log</h2>
+                <label class="log-date-row" for="log-date-input">
+                  <span class="tab-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                      <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2" />
+                      <path d="M3 10h18M8 3.5v3M16 3.5v3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                  </span>
+                  <span id="log-date-value"></span>
+                </label>
+                <input id="log-date-input" class="log-date-input" type="date" />
+              </div>
+              <div class="log-head-actions">
+                <button id="log-add-exercise-btn" type="button" class="primary-cta compact">Add Exercise</button>
+                <button id="log-load-template-btn" type="button" class="secondary primary-cta compact">Load Template</button>
+              </div>
+            </div>
+
+            <div id="log-exercise-list" class="log-exercise-stack"></div>
+
+            <div id="log-exercise-modal" class="overlay-modal hidden">
+              <div class="modal-card template-picker-modal">
+                <div class="card-heading-row">
+                  <h3>Add Exercises</h3>
+                  <button id="log-exercise-close" type="button" class="mini-icon-btn" aria-label="Close">✕</button>
+                </div>
+                <div class="template-picker-toolbar">
+                  <input id="log-exercise-search" placeholder="Quick search..." />
+                  <div id="log-exercise-muscle-chips" class="exercise-chip-row"></div>
+                </div>
+                <div id="log-exercise-picker-list" class="template-picker-grid"></div>
+                <div class="template-picker-actions">
+                  <button id="log-exercise-cancel" type="button" class="secondary">Cancel</button>
+                  <button id="log-exercise-save" type="button">Save Selection</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="log-template-modal" class="overlay-modal hidden">
+              <div class="modal-card log-template-modal-card">
+                <div class="card-heading-row">
+                  <h3>Load Template</h3>
+                  <button id="log-template-close" type="button" class="mini-icon-btn" aria-label="Close">✕</button>
+                </div>
+                <div id="log-template-list" class="log-template-list"></div>
+                <div class="template-picker-actions">
+                  <button id="log-template-cancel" type="button" class="secondary">Cancel</button>
+                  <button id="log-template-load" type="button">Load Template</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="tab-panel" id="tab-calories">
+            <div class="section-head">
+              <h2>Calories</h2>
+            </div>
+
+            <div class="calories-layout">
+              <div class="calories-top-grid">
+                <article class="calories-protocol-card">
+                  <div class="calories-card-head">
+                    <h3>Nutrition Protocol</h3>
+                    <div class="calories-target-menu-shell">
+                      <button id="calories-target-menu-btn" type="button" class="mini-icon-btn calories-target-menu-btn" aria-label="Open target menu">⋯</button>
+                      <div id="calories-target-menu" class="calories-target-menu hidden">
+                        <button id="calories-open-targets" type="button" class="calories-target-menu-item">Set Targets</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="calories-rings" class="calories-rings-wrap"></div>
+                </article>
+
+                <article class="calories-empty-panel calories-intake-card">
+                  <div class="calories-card-head">
+                    <h3>Food Intake</h3>
+                  </div>
+
+                  <div class="calories-intake-search">
+                    <label class="field-label" for="calories-food-search">Search food</label>
+                    <div class="calories-search-shell">
+                      <input id="calories-food-search" type="text" placeholder="Start typing food name..." autocomplete="off" />
+                      <div id="calories-food-results" class="calories-search-results hidden"></div>
+                    </div>
+                  </div>
+
+                  <div class="calories-today-divider"></div>
+
+                  <div class="calories-card-head calories-today-head">
+                    <h3>Today Log</h3>
+                  </div>
+                  <div id="calories-food-log-list" class="calories-food-log-list"></div>
+                </article>
+              </div>
+
+              <article class="calories-empty-panel calories-empty-panel-bottom calories-monthly-card">
+                <div class="calories-card-head calories-monthly-head">
+                  <h3>Monthly Consumption</h3>
+                  <div class="calories-month-picker-wrap">
+                    <label class="field-label" for="calories-month-picker">Month</label>
+                    <input id="calories-month-picker" type="month" />
+                  </div>
+                </div>
+                <div class="calories-month-legend">
+                  <span class="calories-month-legend-item">
+                    <span class="calories-legend-dot kcal"></span>
+                    <span>Kcal</span>
+                  </span>
+                  <span class="calories-month-legend-item">
+                    <span class="calories-legend-dot protein"></span>
+                    <span>Protein</span>
+                  </span>
+                </div>
+                <div id="calories-month-chart" class="calories-month-chart"></div>
+              </article>
+            </div>
+
+            <div id="calories-target-modal" class="overlay-modal hidden">
+              <div class="modal-card calories-target-modal-card">
+                <div class="card-heading-row">
+                  <h3>Daily Targets</h3>
+                  <button id="calories-target-close" type="button" class="mini-icon-btn" aria-label="Close">✕</button>
+                </div>
+                <form id="calories-target-form" class="stack-form">
+                  <div>
+                    <label class="field-label" for="calories-target-kcal">Calories (kcal)</label>
+                    <input id="calories-target-kcal" name="targetKcal" type="number" min="1" step="1" required />
+                  </div>
+                  <div>
+                    <label class="field-label" for="calories-target-protein">Protein (g)</label>
+                    <input id="calories-target-protein" name="targetProtein" type="number" min="1" step="0.5" required />
+                  </div>
+                  <div class="template-picker-actions">
+                    <button id="calories-target-cancel" type="button" class="secondary">Cancel</button>
+                    <button type="submit">Save Targets</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div id="calories-food-modal" class="overlay-modal hidden">
+              <div class="modal-card calories-food-modal-card">
+                <div class="card-heading-row">
+                  <h3>Add Food</h3>
+                  <button id="calories-food-close" type="button" class="mini-icon-btn" aria-label="Close">✕</button>
+                </div>
+                <div id="calories-selected-food-preview" class="calories-selected-food-preview"></div>
+                <form id="calories-food-form" class="stack-form">
+                  <div>
+                    <label class="field-label" for="calories-food-grams">Amount (grams)</label>
+                    <input id="calories-food-grams" name="grams" type="number" min="1" step="1" required />
+                  </div>
+                  <div class="template-picker-actions">
+                    <button id="calories-food-cancel" type="button" class="secondary">Cancel</button>
+                    <button type="submit">Add Food</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </section>
+
+          <section class="tab-panel" id="tab-templates">
+            <div class="section-head">
+              <h2>Templates</h2>
+              <button id="template-create-toggle" type="button" class="primary-cta compact">+ New Template</button>
+            </div>
+
+            <div id="templates-board" class="templates-board"></div>
+
+            <div id="template-name-modal" class="overlay-modal hidden">
+              <div class="modal-card">
+                <div class="card-heading-row">
+                  <h3>New Template</h3>
+                  <button id="template-name-close" type="button" class="mini-icon-btn" aria-label="Close">✕</button>
+                </div>
+                <form id="template-name-form" class="stack-form">
+                  <input
+                    id="template-name-input"
+                    name="templateName"
+                    placeholder="e.g. Push Day A"
+                    autocomplete="off"
+                    required
+                  />
+                  <button type="submit">Create Template</button>
+                </form>
+              </div>
+            </div>
+
+            <div id="template-exercise-modal" class="overlay-modal hidden">
+              <div class="modal-card template-picker-modal">
+                <div class="card-heading-row">
+                  <h3 id="template-exercise-modal-title">Add Exercises</h3>
+                  <button id="template-exercise-close" type="button" class="mini-icon-btn" aria-label="Close">✕</button>
+                </div>
+
+                <div class="template-picker-toolbar">
+                  <input id="template-exercise-search" placeholder="Quick search..." />
+                  <div id="template-exercise-muscle-chips" class="exercise-chip-row"></div>
+                </div>
+
+                <div id="template-exercise-list" class="template-picker-grid"></div>
+
+                <div class="template-picker-actions">
+                  <button id="template-exercise-cancel" type="button" class="secondary">Cancel</button>
+                  <button id="template-exercise-save" type="button">Save Selection</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="tab-panel" id="tab-exercises">
+            <div class="section-head">
+              <h2>Exercises</h2>
+            </div>
+            <div class="exercise-toolbar">
+              <input id="exercise-search" placeholder="Quick search..." />
+              <div id="exercise-muscle-chips" class="exercise-chip-row"></div>
+              <button id="open-exercise-drawer" type="button" class="primary-cta compact exercise-toolbar-cta">+ New Exercise</button>
+            </div>
+            <p class="section-subtitle">Manage and browse your movement patterns.</p>
+
+            <div id="exercise-list" class="exercise-library-grid"></div>
+
+            <div id="exercise-drawer-backdrop" class="drawer-backdrop hidden"></div>
+            <aside id="exercise-drawer" class="exercise-drawer hidden">
+              <div class="drawer-head">
+                <h3 id="exercise-drawer-title">New Exercise</h3>
+                <button id="close-exercise-drawer" type="button" class="mini-icon-btn" aria-label="Close">✕</button>
+              </div>
+
+              <form id="exercise-drawer-form" class="stack-form">
+                <label class="field-label" for="exercise-name-input">Exercise Name</label>
+                <input
+                  id="exercise-name-input"
+                  name="name"
+                  placeholder="e.g. Incline Dumbbell Press"
+                  autocomplete="off"
+                  required
+                />
+
+                <div>
+                  <label class="field-label">Muscle Groups</label>
+                  <div class="option-grid two-col" id="muscle-group-options">
+                    <label class="check-chip"><input type="checkbox" name="muscleGroup" value="Chest" />Chest</label>
+                    <label class="check-chip"><input type="checkbox" name="muscleGroup" value="Back" />Back</label>
+                    <label class="check-chip"><input type="checkbox" name="muscleGroup" value="Shoulders" />Shoulders</label>
+                    <label class="check-chip"><input type="checkbox" name="muscleGroup" value="Biceps" />Biceps</label>
+                    <label class="check-chip"><input type="checkbox" name="muscleGroup" value="Triceps" />Triceps</label>
+                    <label class="check-chip"><input type="checkbox" name="muscleGroup" value="Quads" />Quads</label>
+                    <label class="check-chip"><input type="checkbox" name="muscleGroup" value="Hamstrings" />Hamstrings</label>
+                    <label class="check-chip"><input type="checkbox" name="muscleGroup" value="Glutes" />Glutes</label>
+                    <label class="check-chip"><input type="checkbox" name="muscleGroup" value="Core" />Core</label>
+                    <label class="check-chip"><input type="checkbox" name="muscleGroup" value="Calves" />Calves</label>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="card-heading-row">
+                    <label class="field-label">Sub-options & Tags</label>
+                    <button id="add-custom-suboption" type="button" class="mini-btn">+ Add Custom</button>
+                  </div>
+                  <div class="row custom-suboption-input-row">
+                    <input id="exercise-custom-suboption" placeholder="Custom sub-option" />
+                  </div>
+                  <div class="field-label saved-tags-label">Saved tags</div>
+                  <div id="available-suboptions-list" class="custom-tag-list suggested-tag-list"></div>
+                </div>
+
+                <button id="exercise-drawer-submit" type="submit">Create Exercise</button>
+              </form>
+            </aside>
+          </section>
+
+          <section class="tab-panel" id="tab-progress">
+            <div class="section-head">
+              <h2>Analytics</h2>
+            </div>
+
+            <div class="analytics-toolbar card">
+              <div class="analytics-field">
+                <label class="field-label" for="analytics-exercise-filter">Exercise</label>
+                <select id="analytics-exercise-filter"></select>
+              </div>
+              <div class="analytics-field">
+                <label class="field-label" for="analytics-tag-filter">Tag</label>
+                <select id="analytics-tag-filter"></select>
+              </div>
+              <div class="analytics-field">
+                <label class="field-label" for="analytics-value-type-filter">Metric Type</label>
+                <select id="analytics-value-type-filter">
+                  <option value="reps">Reps</option>
+                  <option value="weight">Weight</option>
+                  <option value="volume">Volume (Reps x Weight)</option>
+                </select>
+              </div>
+              <div class="analytics-periods" role="group" aria-label="Period">
+                <button type="button" class="analytics-period-btn active" data-analytics-period="month">This Month</button>
+                <button type="button" class="analytics-period-btn" data-analytics-period="year">This Year</button>
+              </div>
+              <div class="analytics-metrics" role="group" aria-label="Metric">
+                <button type="button" class="analytics-period-btn active" data-analytics-metric="avg">AVG</button>
+                <button type="button" class="analytics-period-btn" data-analytics-metric="max">MAX</button>
+              </div>
+            </div>
+
+            <div class="analytics-chart-card card">
+              <div class="card-heading-row">
+                <h3>Training Trends</h3>
+                <span id="analytics-range-label" class="muted small"></span>
+              </div>
+              <div id="analytics-chart" class="analytics-chart"></div>
+            </div>
+          </section>
+
+          <section class="tab-panel" id="tab-settings">
+            <h2>Settings</h2>
+            <div class="card">
+              <h3>App Profile</h3>
+              <p class="muted">Logo upload and extra app preferences can be added here next.</p>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
